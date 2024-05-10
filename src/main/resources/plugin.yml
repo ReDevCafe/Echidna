@@ -1,0 +1,4 @@
+name: Echidna
+version: '${project.version}'
+main: org.momento.echidna.Echidna
+api-version: '1.20'
