@@ -6,14 +6,12 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.InsertManyResult;
 import org.bson.Document;
 import org.bson.UuidRepresentation;
 import org.momento.echidna.Echidna;
 import org.momento.echidna.network.MongoDTO;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MongoDBService {
@@ -38,13 +36,13 @@ public class MongoDBService {
         connected = true;
     }
 
-    public static <T extends MongoDTO> Optional<InsertManyResult> sendManyData(String collectionName, List<T> dtoList) {
-        if (dtoList.isEmpty()) return Optional.empty();
+    public static <T extends MongoDTO> void sendManyData(String collectionName, List<T> dtoList) {
+        if (dtoList.isEmpty()) return;
         MongoCollection<Document> collection = database.getCollection(collectionName);
         List<Document> documents = dtoList.stream()
                 .map(MongoDTO::toDocument)
                 .collect(Collectors.toList());
-        return Optional.of(collection.insertMany(documents));
+        collection.insertMany(documents);
     }
 
     public static void disconnect() {

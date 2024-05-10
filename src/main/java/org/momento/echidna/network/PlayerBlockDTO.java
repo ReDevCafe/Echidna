@@ -11,6 +11,7 @@ import java.util.UUID;
 public class PlayerBlockDTO implements MongoDTO {
 
     private final UUID playerUUID;
+    private final UUID worldUUID;
     private final double blockX;
     private final double blockY;
     private final double blockZ;
@@ -26,25 +27,7 @@ public class PlayerBlockDTO implements MongoDTO {
         this.material = block.getType();
         this.broken = broken;
         this.date = new Date();
-    }
-
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(playerUUID);
-        sb.append(" => (");
-        sb.append(blockX);
-        sb.append(", ");
-        sb.append(blockY);
-        sb.append(", ");
-        sb.append(blockZ);
-        sb.append("): ");
-        sb.append(material);
-        if (broken)
-            sb.append(" broken at ");
-        else
-            sb.append(" placed at ");
-        sb.append(date);
-        return sb.toString();
+        this.worldUUID = block.getWorld().getUID();
     }
 
     public Document toDocument() {
@@ -52,6 +35,7 @@ public class PlayerBlockDTO implements MongoDTO {
         doc.append("blockX", blockX);
         doc.append("blockY", blockY);
         doc.append("blockZ", blockZ);
+        doc.append("worldUUID", worldUUID);
         doc.append("material", material);
         doc.append("broken", broken);
         doc.append("date", date);
