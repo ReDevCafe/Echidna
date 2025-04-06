@@ -12,6 +12,7 @@ import org.momento.echidna.Echidna;
 import org.momento.echidna.network.MongoDTO;
 
 import java.util.List;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class MongoDBService {
@@ -36,7 +37,7 @@ public class MongoDBService {
         connected = true;
     }
 
-    public static <T extends MongoDTO> void sendManyData(String collectionName, List<T> dtoList) {
+    public static <T extends MongoDTO> void sendManyData(String collectionName, Queue<T> dtoList) {
         if (dtoList.isEmpty()) return;
         MongoCollection<Document> collection = database.getCollection(collectionName);
         List<Document> documents = dtoList.stream()
