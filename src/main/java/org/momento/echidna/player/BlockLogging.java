@@ -1,4 +1,4 @@
-package org.momento.echidna;
+package org.momento.echidna.player;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -6,15 +6,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.momento.echidna.network.PlayerBlockDTO;
+import org.momento.echidna.Echidna;
+import org.momento.echidna.network.BlockDTO;
 
-public class PlayerBlockLogging implements Listener {
+public class BlockLogging implements Listener {
 
     private void addToDatabase(Player player, Block block, boolean broken) {
         if (player.isOp()) return;
         //TODO Possibly check a specific permission instead
-        PlayerBlockDTO dto = new PlayerBlockDTO(player, block, broken);
-        Echidna.playerBlocksDTOS.add(dto);
+        BlockDTO dto = new BlockDTO(player, block, broken);
+        Echidna.blocksDTOS.add(dto);
     }
 
     @EventHandler
